@@ -14,6 +14,7 @@
         
     </head>
     <body class="font-sans text-black antialiased bg-gray-300">
+        <h1>{{ $title}}</h1>
         <div id="app" class="h-screen w-full flex justify-center items-center">
                 <comment-form></comment-form>
         <!--             <example-component></example-component> -->            

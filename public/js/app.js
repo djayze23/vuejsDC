@@ -1908,6 +1908,26 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1916,17 +1936,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['respondTo'],
   data: function data() {
     return {
-      comment: ''
+      form: {
+        name: '',
+        body: '',
+        url: window.location.href
+      },
+      errors: {}
     };
+  },
+  computed: {
+    fullForm: function fullForm() {
+      if (this.respondTo) {
+        return _objectSpread({}, this.form, {
+          respond_to_id: this.respondTo.id
+        });
+      }
+
+      return this.form;
+    }
   },
   methods: {
     submitComment: function submitComment() {
-      axios.post('/comments', {
-        content: this.comment
+      var _this = this;
+
+      axios.post('/comments', this.fullForm).then(function (_ref) {
+        var data = _ref.data;
+
+        _this.$emit('newComment', data);
+
+        _this.form.body = "";
+        _this.errors = {};
+      })["catch"](function (error) {
+        _this.errors = error.response.data.errors;
       });
-      console.log(this.comment);
     }
   }
 });
@@ -37350,32 +37395,102 @@ var render = function() {
       }
     },
     [
-      _c("textarea", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.comment,
-            expression: "comment"
-          }
-        ],
-        staticClass: "p-4 rounded border border-gray-600",
-        attrs: { name: "", id: "", cols: "30", rows: "10" },
-        domProps: { value: _vm.comment },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
+      _c("div", { staticClass: "mb-3" }, [
+        _c("h3", { staticClass: "font-normal text-gray-600 text-sm" }, [
+          _vm._v("Nouveau commentaire")
+        ]),
+        _vm._v(" "),
+        _vm.respondTo
+          ? _c("p", { staticClass: "text-gray-600 text-xs" }, [
+              _vm._v("\n\t\t\tEn réponse à "),
+              _c("span", { staticClass: "font-semibold" }, [
+                _vm._v(_vm._s(_vm.respondTo.name))
+              ]),
+              _vm._v(" : " + _vm._s(_vm.respondTo.body) + "\n\t\t"),
+              _c(
+                "button",
+                {
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.$emit("cancel-respond-to")
+                    }
+                  }
+                },
+                [_vm._v("Annuler")]
+              )
+            ])
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "mb-3 " }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.name,
+              expression: "form.name"
             }
-            _vm.comment = $event.target.value
+          ],
+          staticClass: "w-full border rounded p-3",
+          class: { "border-red": _vm.errors.name },
+          attrs: { type: "text", placeholder: "Pseudo" },
+          domProps: { value: _vm.form.name },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.form, "name", $event.target.value)
+            }
           }
-        }
-      }),
+        }),
+        _vm._v(" "),
+        _vm.errors.name
+          ? _c("p", {
+              staticClass: "text-red px-3 py-1",
+              domProps: { textContent: _vm._s(_vm.errors.name[0]) }
+            })
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "mb-3" }, [
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.body,
+              expression: "form.body"
+            }
+          ],
+          staticClass: "w-full border rounded p-3",
+          class: { "border-red": _vm.errors.body },
+          attrs: { placeholder: "Commentaire" },
+          domProps: { value: _vm.form.body },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.form, "body", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm.errors.body
+          ? _c("p", {
+              staticClass: "text-red px-3 py-1",
+              domProps: { textContent: _vm._s(_vm.errors.body[0]) }
+            })
+          : _vm._e()
+      ]),
       _vm._v(" "),
       _c(
         "button",
         {
-          staticClass: "px-4 rounded border border-red-500 bg-blue-500",
+          staticClass: "px-4 rounded border bg-blue-500",
           attrs: { type: "submit" }
         },
         [_vm._v("commenter")]
