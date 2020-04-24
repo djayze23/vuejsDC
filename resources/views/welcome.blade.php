@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{!! csrf_token() !!}">
 
         <title>Laravel</title>
 
@@ -13,10 +14,11 @@
         <!-- Styles -->
         
     </head>
-    <body class="font-sans text-black antialiased bg-gray-300">
-        <h1>{{ $title}}</h1>
+    <body class="font-sans text-black antialiased">
+        <h1 class="m-8 font-bold">{{ $title }}</h1>
         <div id="app" class="h-screen w-full flex justify-center items-center">
-                <comment-form></comment-form>
+                {{-- <comment-form></comment-form> --}}
+                <comments class="mx-8"></comments>
         <!--             <example-component></example-component> -->            
                 {{-- <password-input></password-input> --}}
         <!--     <div class="md:flex container border p-4">

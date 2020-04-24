@@ -8,14 +8,14 @@
 			</p>
 		</div>
 		<div class="mb-3 ">
-			<input type="text" class="w-full border rounded p-3" :class="{'border-red': errors.name }" v-model="form.name" placeholder="Pseudo">
-			<p class="text-red px-3 py-1" v-if="errors.name" v-text="errors.name[0]"></p>
+			<input type="text" class="w-full border rounded p-3" :class="{'border-red-600': errors.name }" v-model="form.name" placeholder="Pseudo">
+			<p class="text-red-600 px-3 py-1" v-if="errors.name" v-text="errors.name[0]"></p>
 		</div>
 		<div class="mb-3">
-			<textarea class="w-full border rounded p-3" :class="{'border-red': errors.body }" v-model="form.body" placeholder="Commentaire"></textarea>
-			<p class="text-red px-3 py-1" v-if="errors.body" v-text="errors.body[0]"></p>
+			<textarea class="w-full border rounded p-3" :class="{'border-red-600': errors.body }" v-model="form.body" placeholder="Commentaire"></textarea>
+			<p class="text-red-600 px-3 py-1" v-if="errors.body" v-text="errors.body[0]"></p>
 		</div>
-		<button type="submit" class="px-4 rounded border bg-blue-500">commenter</button>
+		<button type="submit" class="px-4 py-2 rounded border bg-blue-500">commenter</button>
 	</form>
 </template>
 
@@ -50,7 +50,6 @@
         methods: {
 
         	submitComment() {
-
         		axios.post('/comments',this.fullForm)
 	        		.then(({data}) => {
 	        			this.$emit('newComment', data)

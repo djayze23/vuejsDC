@@ -28,12 +28,12 @@ class CommentsController extends Controller
 
     	// Insertion dans la base de données:
     	// utilisation du modèle comment
-    	Comment::create([
+    	return Comment::create([
 
     		'respond_to_id' => request('respond_to_id'),
             'name' => request('name'),
     		'url' => request('url'),
-    		'body' => request('content'),
+    		'body' => request('body'),
     	])->setRelation('children', collect());
     }
 }

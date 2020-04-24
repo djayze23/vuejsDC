@@ -28,11 +28,11 @@
 </template>
 
 <script>
-	import CommentForm from './CommentForm.vue' // permet d'inclure le composant uniquement dans ce template en lui donnant son chemin.
+	import CommentForm from './commentForm.vue' // permet d'inclure le composant uniquement dans ce template en lui donnant son chemin.
 	import Comment from './Comment.vue'
 
 	export default {
-		//décris à ce composant (comments) qu'il a un ou plusieurs sous composant "commentForm, Comment".
+		//décris à ce composant (comments) qu'il a un ou plusieurs sous-composants "commentForm, Comment".
 		components: { CommentForm, Comment },
  
 		data(){ // les datas sont modifiables, c'est pour cela qu'on utilise comments pour le rafraichissement des données dans la page
@@ -45,7 +45,8 @@
 			}
 		},
 		
-		mounted(){ // fonction executée par vuejs dès que le composant est créé (à l'execution du programme).
+		mounted(){ 
+			// fonction executée par vuejs dès que le composant est créé (à l'execution du programme).
 			// 1er param, fonction anonyme, 2ème param, temps)
 			setInterval(()=>{
 				this.now = new Date()
@@ -62,8 +63,8 @@
 					this.comments = this.comments.concat(pagination.data)
 					this.nextPage = pagination.next_page_url
 					this.numberOfComments = pagination.total
-			})
-			}
+				})
+			},
 
 			newComment(comment){
 				if(!this.respondTo){
@@ -71,7 +72,7 @@
 					return // arrête l'execution de new comment
 				}
 				this.respondTo.children.push(comment)
-			}
+			},
 		},
 
 	}

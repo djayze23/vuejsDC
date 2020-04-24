@@ -21,7 +21,8 @@ window.Vue = require('vue');
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('password-input', require('./components/passwordInput.vue').default);
-Vue.component('comment-form', require('./components/commentForm.vue').default);
+// Vue.component('comment-form', require('./components/commentForm.vue').default);
+Vue.component('comments', require('./components/Comments.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
