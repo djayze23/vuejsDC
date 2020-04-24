@@ -16,7 +16,7 @@
     </head>
     <body class="font-sans text-black antialiased">
         <h1 class="m-8 font-bold">{{ $title }}</h1>
-        <div id="app" class="h-screen w-full flex justify-center items-center">
+        <div id="app" class="w-full flex justify-center items-center">
                 {{-- <comment-form></comment-form> --}}
                 <comments class="mx-8"></comments>
         <!--             <example-component></example-component> -->            

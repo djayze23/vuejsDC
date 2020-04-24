@@ -15,7 +15,7 @@
 			<textarea class="w-full border rounded p-3" :class="{'border-red-600': errors.body }" v-model="form.body" placeholder="Commentaire"></textarea>
 			<p class="text-red-600 px-3 py-1" v-if="errors.body" v-text="errors.body[0]"></p>
 		</div>
-		<button type="submit" class="px-4 py-2 rounded border bg-blue-500">commenter</button>
+		<button type="submit" class="px-4 py-2 mb-3 rounded border bg-blue-500">commenter</button>
 	</form>
 </template>
 

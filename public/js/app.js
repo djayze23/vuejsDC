@@ -1966,7 +1966,8 @@ __webpack_require__.r(__webpack_exports__);
   // données props reçues de l'élément parent "comments.vue"
   data: function data() {
     return {
-      edit: false
+      edit: false,
+      newBody: this.comment.body
     };
   },
   // Vuejs gère plus facilement les computed que les méthods
@@ -1980,7 +1981,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     update: function update() {
-      console.log('updating');
+      this.comment.body = this.newBody;
+      this.edit = false;
+    },
+    cancel: function cancel() {
+      this.edit = false;
+      this.newBody = this.comment.body;
     }
   }
 });
@@ -87043,7 +87049,26 @@ var render = function() {
         _vm._v(" "),
         _vm.edit
           ? _c("p", [
-              _c("textarea", { staticClass: "w-full border rounded p-3" })
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.newBody,
+                    expression: "newBody"
+                  }
+                ],
+                staticClass: "w-full border rounded p-3",
+                domProps: { value: _vm.newBody },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.newBody = $event.target.value
+                  }
+                }
+              })
             ])
           : _c("p", [
               _vm._v("\n\t\t\t\t" + _vm._s(_vm.comment.body) + "\n\t\t\t")
@@ -87060,7 +87085,7 @@ var render = function() {
                 attrs: { type: "button" },
                 on: {
                   click: function($event) {
-                    _vm.edit = false
+                    return _vm.cancel()
                   }
                 }
               },
@@ -87425,7 +87450,7 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: "px-4 py-2 rounded border bg-blue-500",
+          staticClass: "px-4 py-2 mb-3 rounded border bg-blue-500",
           attrs: { type: "submit" }
         },
         [_vm._v("commenter")]

@@ -6,14 +6,14 @@
 					{{ comment.name }} - il y a {{ diffForHumans }}
 				</p>
 				<p v-if="edit">
-					<textarea class="w-full border rounded p-3"></textarea>
+					<textarea class="w-full border rounded p-3" v-model="newBody"></textarea>
 				</p>
 				<p v-else>
 					{{ comment.body }}
 				</p>
 			</div>
 			<p v-if="edit" class="flex -mx-2">	
-				<button type="button" class="mx-2 flex items-center text-xs text-gray-600 font-semibold" @click="edit = false">
+				<button type="button" class="mx-2 flex items-center text-xs text-gray-600 font-semibold" @click="cancel()">
 					<svg class="fill-current text-gray-dark h-3 mr-px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z"/></svg>
 					Annuler
 				</button>
@@ -58,6 +58,7 @@
 		data(){
 			return {
 				edit:false,
+				newBody: this.comment.body,
 			}
 		},
 
@@ -71,8 +72,13 @@
 
 		methods : {
 			update(){
-				console.log('updating')
-			}
-		}
+				this.comment.body = this.newBody
+				this.edit = false
+			},
+			cancel(){
+				this.edit = false
+				this.newBody = this.comment.body
+			},
+		},
 	}
 </script>
